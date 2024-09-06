@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model JobListing {
+  id                    String   @id @default(uuid())
+  jobTitle                  String
+  jobReferenceNumber        String?
+  jobCategory               JobCategory
+  jobLevel                  JobLevel
+  jobLocation               JobLocation
+  employmentType            EmploymentType
+  vacancies                 Int 
+  jobSkills                 JobSkills[]
+
+  jobDescription            String
+  applicationDeadline       DateTime?
+  applicationInstructions   String?
+  contactEmail              String
+  requiredDocuments         String[] // Array to store multiple values
+  candidateQuestions        String[] // Array to store multiple values
+  createdAt                 DateTime @default(now())
+}
+
+enum JobCategory {
+  WEB_DEVELOPER
+  MOBILE_APP_DEVELOPER
+  HUMAN_RESOURCE_DEVELOPER
+  QUALITY_ASSURANCE
+  OTHER
+}
+
+enum JobLevel {
+  INTERN
+  JUNIOR
+  MID_LEVEL
+  SENIOR
+  LEAD
+}
+
+enum JobLocation {
+  ONSITE
+  REMOTE
+  HYBRID
+}
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+  CONTRACT
+  REMOTE
+  ONSITE
+  HYBRID
+}
+
+enum JobSkills {
+  REACT_NATIVE
+  REACT_JS
+  NODE_JS
+}
